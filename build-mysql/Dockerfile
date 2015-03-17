@@ -24,7 +24,7 @@ RUN \
 VOLUME ["/etc/mysql", "/var/lib/mysql"]
 
 # Define working directory.
-WORKDIR /data
+WORKDIR /Applications/AMPPS/var
 
 # Define default command.
 CMD ["mysqld_safe"]
