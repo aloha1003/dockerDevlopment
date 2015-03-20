@@ -1,23 +1,24 @@
 nginx:
-    image:aloha1003/nginx
-    ports:
-    - "10081:80"
+  image: aloha1003/nginx:latest
+  ports:
+        - "10081:80"
   volumes:
     - .:/usr/share/nginx/html:ro
-    links:
+  links:
     # 連結 redis 與 mysql 環境
     - redis
     - mysql
 php:
-    image:aloha1003/php
+  image: aloha1003/php:latest
 redis:
-    image:aloha1003/redis
+  image: aloha1003/redis
+  ports:
     - "6379:6379"
-    volumes:
+  volumes:
     # 將實體機器的資料庫 data 掛載到 docker 裡面
     - "/usr/local/var/db/redis:/data"
 mysql:
-  image: aloha1003/mysql
+  image: aloha1003/mysql:latest
   ports:
     - "3306:3306"
   volumes:
@@ -28,4 +29,4 @@ mysql:
     # 定義 mysql 的 root 密碼
     MYSQL_ROOT_PASSWORD: "root"
 gulp:
-  image: aloha1003/gulp
+  image: aloha1003/gulp:latest

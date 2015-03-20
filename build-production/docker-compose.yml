@@ -1,5 +1,5 @@
 nginx:
-    image:aloha1003/nginx
+    image: aloha1003/nginx:latest
     ports:
     - "10081:80"
   volumes:
@@ -9,15 +9,16 @@ nginx:
     - redis
     - mysql
 php:
-    image:aloha1003/php
+    image: aloha1003/php:latest
 redis:
-    image:aloha1003/redis
-    - "6379:6379"
+    image: aloha1003/redis:latest
+    ports:
+      - "6379:6379"
     volumes:
     # 將實體機器的資料庫 data 掛載到 docker 裡面
     - "/usr/local/var/db/redis:/data"
 mysql:
-  image: aloha1003/mysql
+  image: aloha1003/mysql:latest
   ports:
     - "3306:3306"
   volumes:
