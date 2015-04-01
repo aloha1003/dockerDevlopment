@@ -1,5 +1,5 @@
 FROM mongo
-
+COPY mongodb.conf /etc/mongodb.conf
 CMD ["mongod"]
 # Expose ports.
 #   - 27017: process
