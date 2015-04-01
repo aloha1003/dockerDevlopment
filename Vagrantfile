@@ -1,3 +1,4 @@
+Vagrant.require_version ">= 1.7.2"
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -8,6 +9,8 @@
 SYNCED_FOLDER = "/home/vagrant/docker-dev"
 FORWARDED_PORT_RANGE = 10080..10100
 
+PROVISION_SCRIPTS = ["provision/setup-env.sh" ]
+
 Vagrant.configure(2) do |config|
     config.vm.define "main", primary: true do |node|
         node.vm.provider "virtualbox" do |v|
@@ -15,6 +18,7 @@ Vagrant.configure(2) do |config|
           v.name = "main"
         end
         node.vm.box = "williamyeh/ubuntu-trusty64-docker"
+        node.vm.box_version = ">= 1.5.0"
         #Configure work directory
         node.vm.synced_folder ".", SYNCED_FOLDER
         #Configure private network
@@ -22,8 +26,12 @@ Vagrant.configure(2) do |config|
         node.vm.provision "hosts" do |hosts|
             hosts.add_host '10.0.0.200', ['registry.com', 'registry']
         end
+
         for i in FORWARDED_PORT_RANGE
                 node.vm.network "forwarded_port", guest: i, host: i
+        end
+        for f in PROVISION_SCRIPTS
+            node.vm.provision "shell", path: f
         end
         node.vm.provider "virtualbox" do |vb|
             vb.customize ["modifyvm", :id, "--memory", "1024"]
