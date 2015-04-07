@@ -1,6 +1,6 @@
 FROM mongo
 COPY mongodb.conf /etc/mongodb.conf
-CMD ["mongod"]
+CMD ["mongod --config /etc/mongodb.conf"]
 # Expose ports.
 #   - 27017: process
 #   - 28017: http

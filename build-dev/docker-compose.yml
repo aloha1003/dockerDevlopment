@@ -1,13 +1,16 @@
 nginx:
   image: aloha1003/nginx:latest
   ports:
-        - "10081:80"
+        - "8080:80"
   volumes:
-    - .:/usr/share/nginx/html:ro
+    - /home/vagrant/docker-dev/data/html:/usr/share/nginx/html:ro
+  working_dir: 
+    - /usr/share/nginx/html
   links:
     # 連結 redis 與 mysql 環境
     - redis
     - mysql
+    - mongo
 php:
   image: aloha1003/php:latest
 redis:
@@ -16,17 +19,25 @@ redis:
     - "6379:6379"
   volumes:
     # 將實體機器的資料庫 data 掛載到 docker 裡面
-    - "/usr/local/var/db/redis:/data"
+    - /usr/local/var/db/redis:/data
 mysql:
   image: aloha1003/mysql:latest
   ports:
     - "3306:3306"
   volumes:
-    - "/etc/mysql:/var/lib/mysql"
+    - /etc/mysql:/var/lib/mysql
   working_dir:
       - "/Applications/AMPPS/var"
   environment:
     # 定義 mysql 的 root 密碼
     MYSQL_ROOT_PASSWORD: "root"
+mongo:
+  image: aloha1003/mongo:latest
+  ports:
+    - "27017:27017"
+    - "28017:28017"
+  volumes:
+    - /home/vagrant/docker-dev/data/mongodb/db:/srv/mongodb
+    - /home/vagrant/docker-dev/data/mongodb/log:/var/log/mongodb
 gulp:
   image: aloha1003/gulp:latest

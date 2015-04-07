@@ -3,6 +3,8 @@
 # append PRIVATE_DOCKER_REGISTRY global env
 #
 
+
+#
 cd docker-dev/build-dev
 docker-compose up -d
 
