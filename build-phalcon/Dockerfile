@@ -1,4 +1,4 @@
-FROM alpine:3.1
+FROM ubuntu:14.04
 
 MAINTAINER Aloha Lin <knives1003@gmail.com>
 
