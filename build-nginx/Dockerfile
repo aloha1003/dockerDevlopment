@@ -28,8 +28,7 @@ RUN mkdir -p /var/run/hhvm
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 ADD php.ini /etc/php5/fpm/conf.d/40-custom.ini
 
-# Expose volumes
-VOLUME ["/var/www", "/etc/nginx/sites-enabled"]
+
 
 
 # start Nginx server, without daemonize itself (correct!)
