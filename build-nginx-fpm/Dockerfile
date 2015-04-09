@@ -28,6 +28,15 @@ RUN apt-get -y install nginx php5-fpm php5-mysql php-apc pwgen python-setuptools
 # Install Extra PHP Modules
 RUN apt-get -y install php5-fpm php5-mysql php-apc php5-gd  php5-imagick php5-imap php5-memcached php5-mcrypt php5-curl php5-xdebug
 
+# Install phalcon
+RUN git clone --depth=1 git://github.com/phalcon/cphalcon.git /usr/local/src/cphalcon
+RUN cd /usr/local/src/cphalcon/build && ./install ;\
+    echo "extension=phalcon.so" > /etc/php5/mods-available/phalcon.ini ;\
+    php5enmod phalcon
+
+RUN apt-get clean
+
+
 RUN rm -rf /var/lib/apt/lists/*
 
 # tweak nginx config
