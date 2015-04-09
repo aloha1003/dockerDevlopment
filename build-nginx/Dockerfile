@@ -33,4 +33,4 @@ VOLUME ["/var/www", "/etc/nginx/sites-enabled"]
 
 
 # start Nginx server, without daemonize itself (correct!)
-CMD [ "nginx", "-g", "daemon off;" ]
+CMD [ "nginx" ]
