@@ -30,9 +30,9 @@ RUN apt-get -y install php5-fpm php5-mysql php-apc php5-gd  php5-imagick php5-im
 
 # Install phalcon
 RUN git clone --depth=1 git://github.com/phalcon/cphalcon.git /usr/local/src/cphalcon
-RUN cd /usr/local/src/cphalcon/build && ./install ;\
-    echo "extension=phalcon.so" > /etc/php5/mods-available/phalcon.ini ;\
-    php5enmod phalcon
+RUN cd cphalcon/build && ./install;
+RUN echo 'extension=phalcon.so' > /etc/php5/fpm/conf.d/phalcon.ini
+
 
 RUN apt-get clean
 
