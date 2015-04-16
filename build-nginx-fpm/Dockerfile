@@ -18,21 +18,27 @@ RUN wget -q http://nginx.org/keys/nginx_signing.key -O- | sudo apt-key add -
 RUN echo deb http://nginx.org/packages/ubuntu/ trusty nginx >> /etc/apt/sources.list
 RUN echo deb-src http://nginx.org/packages/ubuntu/ trusty nginx >> /etc/apt/sources.list
 
-# Update System
+# Update System 
 RUN apt-get update
 RUN apt-get -y upgrade
 
 # Basic Requirements
-RUN apt-get -y install nginx php5-fpm php5-mysql php-apc pwgen python-setuptools curl git unzip vim
+RUN apt-get -y install nginx php5-fpm php5-mysql php-apc pwgen python-software-properties python-setuptools  software-properties-common curl  git unzip vim  
 
 # Install Extra PHP Modules
 RUN apt-get -y install php5-fpm php5-mysql php-apc php5-gd  php5-imagick php5-imap php5-memcached php5-mcrypt php5-curl php5-xdebug
 
-# Install phalcon
-RUN git clone --depth=1 git://github.com/phalcon/cphalcon.git /usr/local/src/cphalcon
-RUN cd cphalcon/build && ./install;
-RUN echo 'extension=phalcon.so' > /etc/php5/fpm/conf.d/phalcon.ini
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php
+RUN mv composer.phar /usr/local/bin/composer
 
+# Install Phalcon
+RUN apt-add-repository ppa:phalcon/stable -y
+RUN apt-get update
+RUN apt-get -y install php5-phalcon
+
+
+# Clean
 
 RUN apt-get clean
 
