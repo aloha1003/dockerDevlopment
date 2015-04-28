@@ -10,7 +10,7 @@ SYNCED_FOLDER = "/home/vagrant/docker-dev"
 # SYNCED_MONGODB_DB_FOLDER = "/Volumes/MACOS/mongodb/var/mongodb"
 # SYNCED_MONGODB_LOG_FOLDER = "/Volumes/MACOS/log/mongodb"
 #FORWARDED_PORT_RANGE = 10080..10100
-FORWARDED_PORT_RANGE_CUSTOM = [28017,27017,8080]
+FORWARDED_PORT_RANGE_CUSTOM = [28017,27017,8080,6379,3306]
 
 
 
@@ -30,6 +30,21 @@ Vagrant.configure(2) do |config|
         node.vm.network "private_network", ip: "10.0.0.10"
         node.vm.provision "hosts" do |hosts|
             hosts.add_host '10.0.0.200', ['registry.com', 'registry']
+        end
+
+        if Vagrant.has_plugin?('vagrant-hostmanager')
+            hosts = Array.new()
+
+            hosts.push("phalcon-module.local");
+            hosts.push("angular-skeleton.local");
+            hosts.push("phalcon-rest.local");
+            hosts.push("phalcon-lynx-rest.local");
+
+            config.hostmanager.enabled           = true
+            config.hostmanager.manage_host       = true
+            config.hostmanager.ignore_private_ip = false
+            config.hostmanager.include_offline   = false
+            config.hostmanager.aliases           = hosts
         end
 
         # for i in FORWARDED_PORT_RANGE
